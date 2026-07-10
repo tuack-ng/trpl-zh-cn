@@ -1,7 +1,6 @@
 ## 使用迭代器处理元素序列
 
-<!-- https://github.com/rust-lang/book/blob/main/src/ch13-02-iterators.md -->
-<!-- commit 56ec353290429e6547109e88afea4de027b0f1a9 -->
+[ch13-02-iterators.md](https://github.com/rust-lang/book/blob/4b71f17f7daba738a1363862dacb818d9b12fb81/src/ch13-02-iterators.md)
 
 迭代器模式允许你依次对一个序列中的项执行某些操作。**迭代器**（*iterator*）负责遍历序列中的每一项并确定序列何时结束的逻辑。使用迭代器时，你无需自己重新实现这些逻辑。
 
@@ -112,6 +111,8 @@ pub trait Iterator {
 由于 `map` 接受一个闭包，因此我们可以指定希望在每个元素上执行的任何操作。这是一个很好的例子，展示了如何通过闭包来自定义某些行为，同时复用 `Iterator` trait 提供的迭代行为。
 
 可以链式调用多个迭代器适配器来以一种易读的方式进行复杂的操作。不过因为所有的迭代器都是惰性的，你必须调用一个消费适配器方法，才能从这些迭代器适配器的调用中获取结果。
+
+<a id="using-closures-that-capture-their-environment"></a>
 
 ### 使用捕获其环境的闭包
 

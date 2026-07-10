@@ -1,7 +1,8 @@
-## 采用测试驱动开发完善库的功能
+<a id="developing-the-librarys-functionality-with-test-driven-development"></a>
 
-<!-- https://github.com/rust-lang/book/blob/main/src/ch12-04-testing-the-librarys-functionality.md -->
-<!-- commit 3a30e4c1fbe641afc066b3af9eb01dcdf5ed8b24 -->
+## 采用测试驱动开发增加功能
+
+[ch12-04-testing-the-librarys-functionality.md](https://github.com/rust-lang/book/blob/d7c0e477a22bcb37fdb290c6046058565d6738c2/src/ch12-04-testing-the-librarys-functionality.md)
 
 现在我们将逻辑提取到了 *src/lib.rs* 并将所有的参数解析和错误处理留在了 *src/main.rs* 中，为代码的核心功能编写测试将更加容易。我们可以直接使用多种参数调用函数并检查返回值而无需从命令行运行二进制文件了。
 
@@ -163,7 +164,7 @@ Rust 有一个有助于一行一行遍历字符串的方法，出于方便它被
 
 [validating-references-with-lifetimes]:
 ch10-03-lifetime-syntax.html#生命周期确保引用有效
-[ch11-anatomy]: ch11-01-writing-tests.html#测试函数剖析
+[ch11-anatomy]: ch11-01-writing-tests.html#精心组织测试函数
 [ch10-lifetimes]: ch10-03-lifetime-syntax.html
 [ch3-iter]: ch03-05-control-flow.html#使用-for-遍历集合
 [ch13-iterators]: ch13-02-iterators.html

@@ -8,14 +8,15 @@
 
 PS:
 
-* 对照源码位置：[https://github.com/rust-lang/book/tree/main/src][source]
-* 每章翻译开头都带有官方链接和 commit hash 的注释，若发现与官方不一致，欢迎 Issue 或 PR
+- 对照源码位置：[https://github.com/rust-lang/book/tree/main/src][source]
+- 注意源码 `src` 目录一般会比 [https://doc.rust-lang.org/book/](https://doc.rust-lang.org/book/) 要新，如果遇到冲突建议对照 `src` 目录。
+- 每章翻译开头都带有官方链接和 commit hash 的注释，若发现与官方不一致，欢迎 Issue 或 PR
 
 [source]: https://github.com/rust-lang/book/tree/main/src
 
 ## 校对
 
-部分章节采用 ChatGPT o4-mini 进行翻译校对。提示词详见 [proofreading_prompt.md](proofreading_prompt.md)
+部分章节采用 Codex 辅助校对。提示词可参考 [proofreading_prompt.md](proofreading_prompt.md)
 
 ## 静态页面构建与文档撰写
 
@@ -25,7 +26,7 @@ PS:
 
 全局安装 mdbook
 
-``` bash
+```bash
 cargo install mdbook
 ```
 
@@ -35,13 +36,10 @@ cd 到项目目录，然后开始构建。构建好的静态文档会出现在 "
 mdbook build
 ```
 
-### 文档撰写
-
-可以通过任意的 http 服务器来预览构建的文档。举个例子：
+在本地部署 HTTP 服务器以阅读文档：
 
 ```bash
-cargo install simple-http-server
-simple-http-server .\book\html\ -i
+mdbook serve
 ```
 
 ## 社区资源
@@ -56,11 +54,26 @@ simple-http-server .\book\html\ -i
 
 - 由 [mdbook-typst-pdf](https://github.com/KaiserY/mdbook-typst-pdf) 生成，有任何问题欢迎 issue 或 PR
 
+## EPUB
+
+你可以使用项目中提供的 Rust 构建工具将本书编译为 EPUB 电子书。
+
+在此之前，请确保您的系统已安装了 [Pandoc](https://pandoc.org/)。
+
+在项目根目录下，运行以下命令开始编译：
+
+```bash
+cargo run --release --manifest-path epub-builder/Cargo.toml
+```
+
+编译成功后，会在根目录下生成 `rust_programming_language.epub`。
+
 ## GitBook
 
 本翻译主要采用 [mdBook](https://github.com/rust-lang-nursery/mdBook) 格式。同时支持 [GitBook](https://github.com/GitbookIO/gitbook)，但会缺失部分功能，如一些代码没有语法高亮。
 
 本翻译加速查看站点有：
- - 深圳站点：<http://120.78.128.153/rustbook>
+
+- 深圳站点：<http://120.78.128.153/rustbook>
 
 [GitBook.com](https://www.gitbook.com/) 地址：<https://kaisery.github.io/trpl-zh-cn/>

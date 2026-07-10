@@ -1,7 +1,6 @@
 ## 附录 C：可派生的 trait
 
-<!-- https://github.com/rust-lang/book/blob/main/src/appendix-03-derivable-traits.md -->
-<!-- commit 56ec353290429e6547109e88afea4de027b0f1a9 -->
+[appendix-03-derivable-traits.md](https://github.com/rust-lang/book/blob/042803ac0fc63e2cb62a4e3b7aaedec018c583f9/src/appendix-03-derivable-traits.md)
 
 在本书的各个部分中，我们讨论了可应用于结构体和枚举定义的 `derive` 属性。`derive` 属性会在使用 `derive` 语法标记的类型上生成对应 trait 的默认实现的代码。
 
@@ -19,7 +18,7 @@
 
 一个无法被派生的 trait 的例子是为终端用户处理格式化的 `Display` 。你应该时常考虑使用合适的方法来为终端用户显示一个类型。终端用户应该看到类型的什么部分？他们会找出相关部分吗？对他们来说最相关的数据格式是什么样的？Rust 编译器没有这样的洞察力，因此无法为你提供合适的默认行为。
 
-本附录所提供的可派生 trait 列表并不全面：库可以为其自己的 trait 实现 `derive`，可以使用 `derive` 的 trait 列表事实上是无限的。实现 `derive` 涉及到过程宏的应用，这在第二十章的 [“宏”][macros] 一节中有介绍。
+本附录所提供的可派生 trait 列表并不全面：库也可以为它们自己的 trait 实现 `derive`，因此可以与 `derive` 搭配使用的 trait 列表实际上是开放的。实现 `derive` 需要用到过程宏，这在第二十章的 [“自定义 `derive` 宏”][custom-derive-macros] 一节中有介绍。
 
 ### 用于程序员输出的 `Debug`
 
@@ -85,11 +84,11 @@
 
 `Default` trait 使你创建一个类型的默认值。派生 `Default` 实现了 `default` 函数。`default` 函数的派生实现调用了类型每部分的 `default` 函数，这意味着类型中所有的字段或值也必须实现了 `Default`，这样才能够派生 `Default` 。
 
-`Default::default` 函数通常结合结构体更新语法一起使用，这在第五章的 [“使用结构体更新语法从其他实例中创建实例”][creating-instances-from-other-instances-with-struct-update-syntax] 部分有讨论。可以自定义一个结构体的一小部分字段而剩余字段则使用 `..Default::default()` 来设置默认值。
+`Default::default` 函数通常结合结构体更新语法一起使用，这在第五章的 [“使用结构体更新语法创建实例”][creating-instances-from-other-instances-with-struct-update-syntax] 部分有讨论。可以自定义一个结构体的一小部分字段而剩余字段则使用 `..Default::default()` 来设置默认值。
 
 例如，当你在 `Option<T>` 实例上使用 `unwrap_or_default` 方法时，`Default` trait 是必须的。如果 `Option<T>` 是 `None` 的话，`unwrap_or_default` 方法将返回存储在 `Option<T>` 中 `T` 类型的 `Default::default` 的结果。
 
-[creating-instances-from-other-instances-with-struct-update-syntax]: ch05-01-defining-structs.html#使用结构体更新语法从其他实例创建实例
+[creating-instances-from-other-instances-with-struct-update-syntax]: ch05-01-defining-structs.html#使用结构体更新语法创建实例
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#只在栈上的数据拷贝
 [variables-and-data-interacting-with-clone]: ch04-01-what-is-ownership.html#使用克隆的变量与数据交互
-[macros]: ch20-05-macros.html#宏
+[custom-derive-macros]: ch20-05-macros.html#自定义-derive-宏

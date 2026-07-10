@@ -1,7 +1,6 @@
 ## 使用 `use` 关键字将路径引入作用域
 
-<!-- https://github.com/rust-lang/book/blob/main/src/ch07-04-bringing-paths-into-scope-with-the-use-keyword.md -->
-<!-- commit 72ad14e4acb12438aa467c4cf256e0bc55df585a -->
+[ch07-04-bringing-paths-into-scope-with-the-use-keyword.md](https://github.com/rust-lang/book/blob/79b9d15410a7b15a65cb86bcb40cbea99198a9e4/src/ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
 
 不得不编写路径来调用函数显得繁琐且重复。在示例 7-7 中，无论我们选择 `add_to_waitlist` 函数的绝对路径还是相对路径，每次我们想要调用 `add_to_waitlist` 时，都必须指定`front_of_house` 和 `hosting`。幸运的是，有一种方法可以简化这个过程。我们可以使用 `use` 关键字创建一个捷径，然后就可以在作用域中的任何地方使用这个更短的名字。
 
@@ -103,7 +102,7 @@
 
 在这个修改之前，外部代码需要使用路径 `restaurant::front_of_house::hosting::add_to_waitlist()` 来调用 `add_to_waitlist` 函数，并且还需要将 `front_of_house` 模块标记为 `pub`。现在这个 `pub use` 从根模块重导出了 `hosting` 模块，外部代码现在可以使用路径 `restaurant::hosting::add_to_waitlist`。
 
-当你代码的内部结构与调用你代码的程序员所想象的结构不同时，重导出会很有用。例如，在这个餐馆的比喻中，经营餐馆的人会想到“前台”和“后台”。但顾客在光顾一家餐馆时，可能不会以这些术语来考虑餐馆的各个部分。使用 `pub use`，我们可以使用一种结构编写代码，却将不同的结构形式暴露出来。这样做使我们的库井井有条，也使开发这个库的程序员和调用这个库的程序员都更加方便。在[“使用 `pub use` 导出便捷的公有 API”][ch14-pub-use]部分让我们再看另一个 `pub use` 的例子来了解这如何影响 crate 的文档。
+当你代码的内部结构与调用你代码的程序员所想象的结构不同时，重导出会很有用。例如，在这个餐馆的比喻中，经营餐馆的人会想到“前台”和“后台”。但顾客在光顾一家餐馆时，可能不会以这些术语来考虑餐馆的各个部分。使用 `pub use`，我们可以使用一种结构编写代码，却将不同的结构形式暴露出来。这样做使我们的库井井有条，也使开发这个库的程序员和调用这个库的程序员都更加方便。在[“导出实用的公有 API”][ch14-pub-use]部分让我们再看另一个 `pub use` 的例子来了解这如何影响 crate 的文档。
 
 ### 使用外部包
 
@@ -132,6 +131,8 @@ use std::collections::HashMap;
 ```
 
 这是一个以标准库 crate 名 `std` 开头的绝对路径。
+
+<a id="using-nested-paths-to-clean-up-large-use-lists"></a>
 
 ### 使用嵌套路径来清理大量的 `use` 列表
 
@@ -177,7 +178,9 @@ use std::collections::HashMap;
 
 这一行便将 `std::io` 和 `std::io::Write` 同时引入作用域。
 
-### glob 运算符
+<a id="the-glob-operator"></a>
+
+### 通过 glob 运算符导入项
 
 如果希望将一个路径下**所有**公有项引入作用域，可以指定路径后跟 `*` glob 运算符：
 
@@ -187,8 +190,8 @@ use std::collections::*;
 
 这个 `use` 语句将 `std::collections` 中定义的所有公有项引入当前作用域。使用 glob 运算符时请多加小心！Glob 会使得我们难以推导作用域中有什么名称和它们是在何处定义的。
 
-glob 运算符经常用于测试模块 `tests` 中，这时会将所有内容引入作用域；我们将在第十一章“如何编写测试”部分讲解。glob 运算符有时也用于 prelude 模式；查看[标准库中的文档](https://doc.rust-lang.org/std/prelude/index.html#other-preludes)了解这个模式的更多细节。
+glob 运算符经常用于测试模块 `tests` 中，这时会将所有内容引入作用域；我们将在第十一章[“如何编写测试”][writing-tests]部分讲解。glob 运算符有时也用于 prelude 模式；查看[标准库中的文档](https://doc.rust-lang.org/std/prelude/index.html#other-preludes)了解这个模式的更多细节。
 
-[ch14-pub-use]: ch14-02-publishing-to-crates-io.html#使用-pub-use-导出便捷的公有-api
+[ch14-pub-use]: ch14-02-publishing-to-crates-io.html#导出实用的公有-api
 [rand]: ch02-00-guessing-game-tutorial.html#生成一个随机数
 [writing-tests]: ch11-01-writing-tests.html#如何编写测试

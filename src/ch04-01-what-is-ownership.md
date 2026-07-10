@@ -1,7 +1,6 @@
 ## 什么是所有权？
 
-<!-- https://github.com/rust-lang/book/blob/main/src/ch04-01-what-is-ownership.md -->
-<!-- commit f8ed2ced5daaa26e2b3a69df4bf5e1ce04dda758 -->
+[ch04-01-what-is-ownership.md](https://github.com/rust-lang/book/blob/05d114287b7d6f6c9253d5242540f00fbd6172ab/src/ch04-01-what-is-ownership.md)
 
 **所有权**（*ownership*）是 Rust 用于如何管理内存的一组规则。所有程序都必须管理其运行时使用计算机内存的方式。一些语言中具有垃圾回收机制，在程序运行时有规律地寻找不再使用的内存；在另一些语言中，程序员必须亲自分配和释放内存。Rust 则选择了第三种方式：通过所有权系统管理内存，编译器在编译时会根据一系列的规则进行检查。如果违反了任何这些规则，程序都不能编译。在运行时，所有权系统的任何功能都不会减慢程序的运行。
 
@@ -66,7 +65,11 @@ let s = "hello";
 
 我们已经见过字符串字面值，即被硬编码进程序里的字符串值。字符串字面值是很方便的，不过它们并不适合使用文本的每一种场景。原因之一就是它们是不可变的。另一个原因是并非所有字符串的值都能在编写代码时就知道：例如，要是想获取用户输入并存储该怎么办呢？为此，Rust 有另一种字符串类型，`String`。这个类型管理被分配到堆上的数据，所以能够存储在编译时未知大小的文本。可以使用 `from` 函数基于字符串字面值来创建 `String`，如下：
 
-这两个冒号 `::` 是运算符，允许将特定的 `from` 函数置于 `String` 类型的命名空间（namespace）下，而不需要使用类似 `string_from` 这样的名字。在第五章的 [“方法语法”（“Method Syntax”）][method-syntax] 部分会着重讲解这个语法，而且在第七章的 [“路径用于引用模块树中的项”][paths-module-tree] 中会讲到模块的命名空间。
+```rust
+let s = String::from("hello");
+```
+
+这两个冒号 `::` 是运算符，允许将特定的 `from` 函数置于 `String` 类型的命名空间（namespace）下，而不需要使用类似 `string_from` 这样的名字。在第五章的 [“方法”][methods] 部分会更详细地讲解这个语法，而且在第七章的 [“路径用于引用模块树中的项”][paths-module-tree] 中会讲到模块的命名空间。
 
 ```rust
 {{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-01-can-mutate-string/src/main.rs:here}}
@@ -98,6 +101,8 @@ Rust 采取了一个不同的策略：内存在拥有它的变量离开作用域
 > 注意：在 C++ 中，这种 item 在生命周期结束时释放资源的模式有时被称作 **资源获取即初始化**（*Resource Acquisition Is Initialization (RAII)*）。如果你使用过 RAII 模式的话应该对 Rust 的 `drop` 函数并不陌生。
 
 这个模式对编写 Rust 代码的方式有着深远的影响。现在它看起来很简单，不过在更复杂的场景下代码的行为可能是不可预测的，比如当有多个变量使用在堆上分配的内存时。现在让我们探索一些这样的场景。
+
+<a id="ways-variables-and-data-interact-move"></a>
 
 #### 使用移动的变量与数据交互
 
@@ -197,6 +202,8 @@ style="width: 50%;"
 
 因此原始的字符串立刻就离开了作用域。Rust 会在其上运行 `drop` 函数同时内存会马上释放。当结尾打印其值时，将会是 `"ahoy, world!"`。
 
+<a id="ways-variables-and-data-interact-clone"></a>
+
 #### 使用克隆的变量与数据交互
 
 如果我们 **确实** 需要深度复制 `String` 中堆上的数据，而不仅仅是栈上的数据，可以使用一个叫做 `clone` 的常用方法。第五章会讨论方法语法，不过因为方法在很多语言中是一个常见功能，所以之前你可能已经见过了。
@@ -223,7 +230,7 @@ style="width: 50%;"
 
 原因是像整型这样的在编译时已知大小的类型被整个存储在栈上，所以拷贝其实际的值是快速的。这意味着没有理由在创建变量 `y` 后使 `x` 无效。换句话说，这里没有深浅拷贝的区别，所以这里调用 `clone` 并不会与通常的浅拷贝有什么不同，我们可以不用管它。
 
-Rust 有一个叫做 `Copy` trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上（[第十章][ch10]将会详细讲解 trait）。如果一个类型实现了 `Copy` trait，那么一个旧的变量在将其赋值给其他变量后仍然有效。
+Rust 有一个叫做 `Copy` trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上（[第十章][traits]将会详细讲解 trait）。如果一个类型实现了 `Copy` trait，那么一个旧的变量在将其赋值给其他变量后仍然有效。
 
 Rust 不允许自身或其任何部分实现了 `Drop` trait 的类型使用 `Copy` trait。如果我们对其值离开作用域时需要特殊处理的类型使用 `Copy` 注解，将会出现一个编译时错误。要学习如何为你的类型添加 `Copy` 注解以实现该 trait，请阅读附录 C 中的 [“可派生的 trait”][derivable-traits]。
 
@@ -279,8 +286,8 @@ Rust 不允许自身或其任何部分实现了 `Drop` trait 的类型使用 `Co
 
 [data-types]: ch03-02-data-types.html#数据类型
 [ch8]: ch08-02-strings.html
-[ch10]: ch10-00-generics.html
 [derivable-traits]: appendix-03-derivable-traits.html
-[method-syntax]: ch05-03-method-syntax.html#方法语法
+[methods]: ch05-03-method-syntax.html#方法
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
+[traits]: ch10-02-traits.html
 [drop]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop

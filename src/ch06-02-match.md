@@ -1,7 +1,8 @@
+<a id="the-match-control-flow-operator"></a>
+
 ## `match` 控制流结构
 
-<!-- https://github.com/rust-lang/book/blob/main/src/ch06-02-match.md -->
-<!-- commit 5d22a358fb2380aa3f270d7b6269b67b8e44849e -->
+[ch06-02-match.md](https://github.com/rust-lang/book/blob/602a0d2e898f5e4ff030eac0b457755a10e0be1e/src/ch06-02-match.md)
 
 Rust 有一个叫做 `match` 的极为强大的控制流运算符，它允许我们将一个值与一系列的模式相比较，并根据相匹配的模式执行相应代码。模式可由字面值、变量、通配符和许多其他内容构成；[第十九章][ch19-00-patterns]会涉及到所有不同种类的模式以及它们的作用。`match` 的力量来源于模式的表现力，以及编译器能够确认所有可能情况均已被覆盖。
 
@@ -50,6 +51,8 @@ Rust 有一个叫做 `match` 的极为强大的控制流运算符，它允许我
 ```
 
 如果调用 `value_in_cents(Coin::Quarter(UsState::Alaska))`，`coin` 将是 `Coin::Quarter(UsState::Alaska)`。当将值与每个分支相比较时，没有分支会匹配，直到遇到 `Coin::Quarter(state)`。这时，`state` 绑定的将会是值 `UsState::Alaska`。接着就可以在 `println!` 表达式中使用这个绑定了，像这样就可以获取 `Coin` 枚举的 `Quarter` 变体中内部的州的值。
+
+<a id="matching-with-optiont"></a>
 
 ### 匹配 `Option<T>`
 
